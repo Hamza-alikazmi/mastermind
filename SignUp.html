@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign Up</title>
+  <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Arial", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: url("/pictures/SignUp.png") no-repeat center center / cover;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 350px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 28px;
+      color: #000;
+      margin-bottom: 15px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    label {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      font-size: 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #0cb8b2;
+      box-shadow: 0 0 5px rgba(12, 184, 178, 0.5);
+    }
+
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+      background: #0cb8b2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn:hover {
+      background: #108581;
+    }
+
+    .footer-text {
+      margin-top: 10px;
+      font-size: 12px;
+      color: #777;
+      text-align: center;
+    }
+
+    .footer-text a {
+      color: #0cb8b2;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+
+    .error {
+      color: red;
+      font-size: 12px;
+      height: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <p>Create your account</p>
+    <h1 id="signupTitle">Sign up</h1>
+    <p id="signupDescription" style="color: #666; margin-bottom: 20px; font-size: 14px;"></p>
+    <form id="signupForm" novalidate>
+      <div class="form-group" id="roleGroup">
+        <select name="role" id="role" required>
+          <option value="" disabled selected>Select a Role</option>
+          <option value="owner">Owner</option>
+          <option value="admin">Admin</option>
+          <option value="employee">Employee</option>
+          <option value="customer">Customer</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" required placeholder="Enter username">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" placeholder="Enter First Name" required />
+          <p id="firstNameError" class="error"></p>
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name"  required  placeholder="Enter Last Name" required />
+          <p id="lastNameError" class="error"></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="Enter email address">
+        <p id="emailError" class="error"></p>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter Your Password" required />
+        <p id="passwordError" class="error"></p>
+      </div>
+      <div class="form-group">
+        <label for="confirm-password">Confirm Password</label>
+        <input type="password" id="confirm-password" placeholder="Confirm Your Password" required />
+        <p id="confirmPasswordError" class="error"></p>
+      </div>
+      <button type="submit" class="btn">Sign Up →</button>
+    </form>
+
+    <p class="footer-text">
+      Already have an account? <a href="/signin">Sign In</a>
+    </p>
+  </div>
+
+  <style>
+  .popup-message {
+    position: fixed;
+    top: 20px; 
+    right: 20px;
+    background-color: #4caf50; 
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    font-size: 16px; 
+    z-index: 9999;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .popup-error {
+    background-color: #f44336; 
+  }
+
+  .popup-show {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  const signupRole = sessionStorage.getItem('signupRole');
+  
+  if (signupRole) {
+    const roleSelect = document.getElementById('role');
+    const roleGroup = document.getElementById('roleGroup');
+    const signupTitle = document.getElementById('signupTitle');
+    const signupDescription = document.getElementById('signupDescription');
+    
+    roleSelect.value = signupRole;
+    roleGroup.style.display = 'none';
+    
+    switch(signupRole) {
+      case 'owner':
+        signupTitle.textContent = 'Owner Registration';
+        signupDescription.textContent = 'Create your owner account for full system access';
+        break;
+      case 'admin':
+        signupTitle.textContent = 'Admin Registration';
+        signupDescription.textContent = 'Create your admin account for system management';
+        break;
+      case 'employee':
+        signupTitle.textContent = 'Employee Registration';
+        signupDescription.textContent = 'Create your employee account for POS access';
+        break;
+      case 'customer':
+        signupTitle.textContent = 'Customer Registration';
+        signupDescription.textContent = 'Create your customer account to shop online';
+        break;
+    }
+  }
+
+  function showPopup(message, isError = false) {
+    const popup = document.createElement("div");
+    popup.className = "popup-message";
+    if (isError) popup.classList.add("popup-error");
+    popup.textContent = message;
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.classList.add("popup-show");
+    }, 0);
+
+    setTimeout(() => {
+      popup.classList.remove("popup-show");
+      setTimeout(() => popup.remove(), 300);
+    }, 3000); // 3 seconds
+  }
+
+  const nameRegex = /^[A-Za-z]+$/;
+  
+  const emailRegex = /^[^\s@]+@(gmail\.com|yahoo\.com)$/;
+  const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+
+  const firstNameInput = document.getElementById("first-name");
+  const lastNameInput = document.getElementById("last-name");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirm-password");
+
+  const firstNameError = document.getElementById("firstNameError");
+  const lastNameError = document.getElementById("lastNameError");
+  const emailError = document.getElementById("emailError");
+  const passwordError = document.getElementById("passwordError");
+  const confirmPasswordError = document.getElementById("confirmPasswordError");
+
+  function validateFirstName() {
+    if (!nameRegex.test(firstNameInput.value)) {
+      firstNameError.textContent = "Only letters allowed.";
+      return false;
+    }
+    firstNameError.textContent = "";
+    return true;
+  }
+
+  function validateLastName() {
+    if (!nameRegex.test(lastNameInput.value)) {
+      lastNameError.textContent = "Only letters allowed.";
+      return false;
+    }
+    lastNameError.textContent = "";
+    return true;
+  }
+
+  function validateEmail() {
+    if (!emailRegex.test(emailInput.value)) {
+      emailError.textContent = "Please enter a valid email address.";
+      return false;
+    }
+    emailError.textContent = "";
+    return true;
+  }
+
+  function validatePassword() {
+    if (!passwordRegex.test(passwordInput.value)) {
+      passwordError.textContent = "Min 8 chars, upper, lower, number & special char.";
+      return false;
+    }
+    passwordError.textContent = "";
+    return true;
+  }
+
+  function validateConfirmPassword() {
+    if (confirmPasswordInput.value !== passwordInput.value) {
+      confirmPasswordError.textContent = "Passwords do not match.";
+      return false;
+    }
+    confirmPasswordError.textContent = "";
+    return true;
+  }
+
+  firstNameInput.addEventListener("input", validateFirstName);
+  lastNameInput.addEventListener("input", validateLastName);
+  emailInput.addEventListener("input", validateEmail);
+  passwordInput.addEventListener("input", validatePassword);
+  confirmPasswordInput.addEventListener("input", validateConfirmPassword);
+
+  document.getElementById("signupForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const isValid =
+      validateFirstName() &&
+      validateLastName() &&
+      validateEmail() &&
+      validatePassword() &&
+      validateConfirmPassword();
+
+    if (isValid) {
+      let formData = {
+        username: document.getElementById("username").value,
+        firstName: firstNameInput.value,
+        lastName: lastNameInput.value,
+        email: emailInput.value,
+        password: passwordInput.value,
+        role: document.getElementById("role").value
+      };
+
+      fetch("/signsup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      })
+        .then(response => {
+          if (!response.ok) throw new Error("Signup failed");
+          return response.json();
+        })
+        .then(data => {
+          if (data.success) {
+            if (formData.role === 'customer') {
+              showPopup(data.message); 
+             
+              sessionStorage.setItem('verificationEmail', formData.email);
+              sessionStorage.setItem('verificationName', `${formData.firstName} ${formData.lastName}`);
+              setTimeout(() => {
+                sessionStorage.removeItem('signupRole');
+                window.location.href = "/verification";
+              }, 3000);
+            } else {
+              showPopup("Registration submitted! Waiting for owner approval.", "success");
+              setTimeout(() => {
+                sessionStorage.removeItem('signupRole');
+                window.location.href = "/signin";
+              }, 3000);
+            }
+          } else {
+            showPopup(data.message || "Signup failed", true);
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          showPopup("Signup failed. Please try again.", true);
+        });
+    }
+  });
+</script>
+
+
+</body>
+
+</html>

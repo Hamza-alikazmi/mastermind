@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Search</title>
+    <link rel="stylesheet" href="invoice.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/pictures/img.jpg" alt="PharmaMastermind" class="logo-img">
+            
+        </div>
+        <div class="nav-links">
+            <a href="/pos"><button>POS</button></a>
+            <a href="/inventory"><button >Inventory</button></a>
+           <a href="/invoice"> <button class="active">Invoices</button></a>
+           <a href="/returns"><button >Returns</button></a>
+           <a href=" /logout "> <button><i class="fas fa-sign-out-alt"></i> Logout </button></a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="search-container">
+            <h2>Search Invoice</h2>
+            <div class="search-box">
+                <input type="text" id="invoiceNumber" placeholder="Enter Order ID (e.g., 123)">
+                <button class="btn" onclick="searchInvoice()">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+            <div style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
+                
+            </div>
+        </div>
+
+        <div class="invoice-display" id="invoiceDisplay">
+        
+        </div>
+    </main>
+
+    <script src="invoice.js"></script>
+</body>
+</html>

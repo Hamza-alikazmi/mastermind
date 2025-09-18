@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management</title>
+    <link rel="stylesheet" href="/css/order.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <a href="/admininventory"><button class="btn-primary"
+            style="margin-bottom: 10px; margin-top: 10px; margin-left: 25px; border-radius: 12px;"><i
+                class="fa fa-arrow-left"></i>
+            Back to Inventory</button></a>
+
+    <div class="container">
+
+        <!-- Left Side - Order List -->
+        <div class="order-section">
+            <h2>Current Order</h2>
+            <div id="order-list"></div>
+            <div class="order-summary">
+                <div class="summary-item">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">0 Pkr</span>
+                </div>
+                <div class="summary-item">
+                    <span>Discount:</span>
+                    <span id="discount">0 Pkr</span>
+                </div>
+                <div class="summary-item total">
+                    <span>Total:</span>
+                    <span id="total">0 Pkr</span>
+                </div>
+                <div class="action-buttons">
+                    <button id="clear-cart" class="btn-secondary">Clear Cart</button>
+                    <button id="confirm-order" class="btn-primary">Confirm Order</button>
+
+
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Product List -->
+        <div class="product-section">
+            <h2>Products</h2>
+            <div class="search-bar">
+                <input type="text" id="search-products" placeholder="Search products...">
+            </div>
+            <div id="product-list"></div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="/js/order.js"></script>
+</body>
+
+</html>

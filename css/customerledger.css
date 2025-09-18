@@ -1,0 +1,340 @@
+:root {
+    --primary-color: #138BA8;
+    --secondary-color: #2C3E50;
+    --accent-color: #3498DB;
+    --background-light: #F8F9FA;
+    --text-primary: #2C3E50;
+    --text-light: #FFFFFF;
+    --success-color: #27AE60;
+    --warning-color: #F39C12;
+    --error-color: #E74C3C;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+    --border-radius: 12px;
+}
+
+.ledger-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.ledger-modal-content {
+    background: var(--text-light);
+    margin: 2% auto;
+    padding: 0;
+    width: 95%;
+    max-width: 1400px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.ledger-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: var(--text-light);
+    padding: 20px 30px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ledger-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.close-ledger {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 28px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+}
+
+.close-ledger:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.ledger-filters {
+    padding: 20px 30px;
+    background: var(--background-light);
+    border-bottom: 1px solid #e1e5e9;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filter-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    min-width: 150px;
+}
+
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(19, 139, 168, 0.1);
+}
+
+.ledger-summary {
+    padding: 20px 30px;
+    background: var(--text-light);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.summary-card {
+    background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid #e1e5e9;
+}
+
+.summary-card h4 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.summary-card .amount {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.summary-card .amount.debit {
+    color: var(--error-color);
+}
+
+.summary-card .amount.credit {
+    color: var(--success-color);
+}
+
+.summary-card .amount.balance {
+    color: var(--primary-color);
+}
+
+.ledger-table-container {
+    padding: 0 30px 30px 30px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.ledger-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--text-light);
+}
+
+.ledger-table thead {
+    background: var(--background-light);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.ledger-table th {
+    padding: 12px 8px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-primary);
+    border-bottom: 2px solid #ddd;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ledger-table td {
+    padding: 10px 8px;
+    border-bottom: 1px solid #f1f1f1;
+    vertical-align: middle;
+}
+
+.ledger-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.ledger-table tbody tr:nth-child(even) {
+    background-color: #fafbfc;
+}
+
+.trans-type {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.trans-type.med-sales {
+    background-color: rgba(39, 174, 96, 0.1);
+    color: #27ae60;
+}
+
+.trans-type.sales-dis {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+}
+
+.trans-type.receipt-vouc {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+}
+
+.amount-cell {
+    text-align: right;
+    font-weight: 600;
+}
+
+.amount-cell.debit {
+    color: var(--error-color);
+}
+
+.amount-cell.credit {
+    color: var(--success-color);
+}
+
+.balance-cell {
+    text-align: right;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.dr-cr-indicator {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-left: 5px;
+}
+
+.export-buttons {
+    padding: 20px 30px;
+    background: var(--background-light);
+    border-top: 1px solid #e1e5e9;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.export-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-btn.pdf {
+    background-color: var(--error-color);
+    color: var(--text-light);
+}
+
+.export-btn.excel {
+    background-color: var(--success-color);
+    color: var(--text-light);
+}
+
+.export-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 768px) {
+    .ledger-modal-content {
+        width: 98%;
+        margin: 1% auto;
+    }
+    
+    .ledger-header,
+    .ledger-filters,
+    .ledger-table-container {
+        padding: 15px;
+    }
+    
+    .ledger-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filter-group select,
+    .filter-group input {
+        min-width: auto;
+        width: 100%;
+    }
+    
+    .ledger-summary {
+        grid-template-columns: 1fr;
+        padding: 15px;
+    }
+    
+    .ledger-table {
+        font-size: 11px;
+    }
+    
+    .ledger-table th,
+    .ledger-table td {
+        padding: 8px 4px;
+    }
+    
+    .export-buttons {
+        flex-direction: column;
+        padding: 15px;
+    }
+}

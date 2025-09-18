@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaMastermind POS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="pos.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon"> 
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/pictures/img.jpg" alt="PharmaMastermind" class="logo-img">
+            
+        </div>
+        <div class="nav-links">
+           <a href="/pos"> <button class="active">POS</button></a>
+           <a href="/inventory"> <button >Inventory</button></a>
+            <a href="/invoice"><button>Invoices</button></a>
+            <a href="/returns"><button >Returns</button></a>
+            <a href=" /logout "> <button><i class="fas fa-sign-out-alt"></i> Logout </button></a>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Product Section -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5><i class="bi bi-grid-3x3-gap-fill me-2"></i>Product Section</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="search-section">
+                            <div class="row">
+                               
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <span class="input-group-text"><i class="bi bi-search"></i></span>
+                                        <input type="text" class="form-control" placeholder="Search by code or name" id="searchInput">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="productTable">
+                                <thead>
+                                    <tr>
+                                        <th>IMG</th>
+                                        <th>NAME</th>
+                                        <th>PRODUCT ID</th>
+                                        <th>QUANTITY</th>
+                                        <th>PRICE</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="productTableBody">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Billing Section -->
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5><i class="bi bi-receipt-cutoff me-2"></i>Billing Section</h5>
+                        <div class="d-flex gap-2 mt-3">
+                           <button class="btn btn-outline-primary w-50" onclick="clearCart()">
+                           <i class="bi bi-trash3 me-1"></i>
+                            Clear order
+                        </button>
+                            <button class="btn btn-primary w-50" onclick="newOrder()">
+                            <i class="bi bi-plus-lg me-1"></i>
+                             New Order
+                        </button>
+                    </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table" id="cartTable">
+                                <thead>
+                                    <tr>
+                                        <th>QTY</th>
+                                        <th>ITEM</th>
+                                        <th>PRICE</th>
+                                        <th>ACTION</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cartTableBody"></tbody>
+                            </table>
+                        </div>
+                        <div class="billing-summary">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Total:</span>
+                                <span id="totalAmount">0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Tax Included:</span>
+                                <span id="taxAmount">0.00</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>Discount:</span>
+                                <span id="discountAmount">0.00</span>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Paid Amount:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rs.</span>
+                                    <input type="number" class="form-control" id="paidAmount">
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Amount Returned:</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rs.</span>
+                                    <input type="number" class="form-control" id="returnedAmount" readonly>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary w-100" onclick="saveOrder()">
+                                <i class="bi bi-save me-1"></i>
+                                Save Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="pos.js" defer></script>
+</body>
+</html>

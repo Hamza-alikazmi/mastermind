@@ -1,0 +1,336 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background-color: #f0f2f5;
+    min-height: 100vh;
+}
+
+
+/* Navbar Styling */
+.navbar {
+    background-color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-img {
+    height: 40px;
+}
+
+.logo h1 {
+    color: #0098b0;
+    font-size: 1.5rem;
+}
+
+.nav-links {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+}
+
+
+.nav-links button {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    background: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.nav-links button:hover {
+    background-color: #f0f0f0;
+}
+
+.nav-links button.active {
+    background-color: #0098b0;
+    color: white;
+}
+
+.nav-links a {
+    text-decoration: none;
+    
+}
+
+
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+
+}
+
+.search-container {
+    width: 60%;
+
+    margin: 0 auto;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+
+
+}
+
+
+
+.search-container h2 {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    position: relative;
+}
+
+.search-container h2::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(45deg, #16a3b8, #20c997);
+    margin: 0.5rem auto;
+    border-radius: 2px;
+}
+
+.search-box {
+    display: flex;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+}
+
+input:focus {
+    outline: none;
+    border-color: #16a3b8;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(22, 163, 184, 0.1);
+}
+
+input::placeholder {
+    color: #adb5bd;
+}
+
+.btn {
+    background: #0098b0;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+
+
+.invoice-display {
+    background-color: white;
+    padding: 2.5rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.invoice-header h3 {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.date {
+    color: #666;
+    font-size: 1rem;
+    background-color: #f8f9fa;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+}
+
+.customer-info {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.customer-info p {
+    margin-bottom: 0.75rem;
+    color: #444;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.customer-info p:last-child {
+    margin-bottom: 0;
+}
+
+.invoice-items {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-items th,
+.invoice-items td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.invoice-items thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #495057;
+    border-radius: 6px 6px 0 0;
+}
+
+.invoice-items tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.invoice-items tfoot td {
+    font-weight: 600;
+    border-top: 2px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+.invoice-actions {
+    margin-top: 20px;
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.return-btn {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.return-btn:hover {
+    background: #c0392b;
+    transform: translateY(-1px);
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 5px;
+}
+
+.btn-primary {
+    background: #0098b0;
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+@media (max-width: 768px) {
+    .search-box {
+        flex-direction: column;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .invoice-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+    
+    .invoice-actions {
+        text-align: center;
+    }
+    
+    .btn {
+        margin: 5px;
+        width: auto;
+    }
+}

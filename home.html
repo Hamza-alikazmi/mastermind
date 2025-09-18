@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dogar Pharmacy POS</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <header class="top-bar">
+        <div class="logo-section">
+            <div class="logo">
+                <img src="/pictures/log.jpeg" alt="Pharmacy Logo">
+            </div>
+            <div>
+                <h1>PharmaMastermind</h1>
+                <p class="tagline">Smarter Stock, Smarter Sales!</p>
+            </div>
+        </div>
+        <nav>
+            <nav>
+    <a href="#" onclick="showSection('about')">About</a>
+    <a href="#" onclick="showSection('help')">Help</a>
+</nav>
+
+        </nav>
+    </header>
+
+    <main>
+        <div class="welcome-section">
+            <h2>Welcome to Dogar Pharmacy</h2>
+            <p>Please select your role to continue.</p>
+        </div>
+
+        <div class="login-cards">
+            <div class="card" onclick="handleLogin('owner')">
+                <div class="icon"><i class="fas fa-crown"></i></div>
+                <h3>Login as Owner</h3>
+                <p>Full system access and business insights.</p>
+            </div>
+
+            <div class="card" onclick="handleLogin('admin')">
+                <div class="shield"><i class="fas fa-shield"></i></div>
+                <h3>Login as Admin</h3>
+                <p>Manage inventory, users, and orders.</p>
+            </div>
+
+            <div class="card" onclick="handleLogin('employee')">
+                <div class="user"><i class="fas fa-user"></i></div>
+                <h3>Login as Employee</h3>
+                <p>Access to POS, inventory, and billing.</p>
+            </div>
+
+            <!-- New Customer Card -->
+            <div class="card" onclick="handleLogin('customer')">
+                <div class="user"><i class="fas fa-users"></i></div>
+                <h3>Login as Customer</h3>
+                <p>Shop online and view your orders.</p>
+            </div>
+        </div>
+    </main>
+    <!-- About Section -->
+<section id="about" style="display: none; padding: 80px 20px; background: var(--background-light); text-align: center;">
+  <h2 style="color: var(--primary-color); font-size: 2rem; margin-bottom: 1rem;">About PharmaMastermind</h2>
+  <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6; color: var(--secondary-color);" class="justified-text">
+  <strong> PharmaMastermind</strong> is an advanced <strong>pharmacy management plus</strong> <strong>decision support system </strong> to transform traditional pharmacy operations into a <strong>smarter, more efficient process</strong>. The system provides a role-based interface for <strong>Owner</strong>,<strong>Admin</strong> <strong>Employees</strong>, and <strong>Customers</strong> ensuring tailored features and smooth workflow management for each user.
+
+Core functionalities include <strong>inventory management, billing, order processing, and customer handling, along with integrated business intelligence tools.</strong> These tools provide <strong>expiry alerts, profit and sales trend analysis, seasonal demand forecasting, and smart restock recommendations, enabling pharmacy owners to make data-driven decisions that enhance profitability and reduce operational risks.</strong>
+
+By combining ease of use, automation, and analytical insights, PharmaMastermind delivers a complete solution for pharmacies seeking efficiency, accuracy, and sustainable growth in a competitive market.
+  </p>
+</section>
+
+<section id="help" style="display: none; padding: 80px 20px; background: #E8F0FE; text-align: center;">
+  <h2 style="color: var(--primary-color); font-size: 2rem; margin-bottom: 1rem;">Help & Support</h2>
+  <p style="max-width: 800px; margin: 0 auto; font-size: 1.1rem; line-height: 1.6; color: var(--secondary-color);">
+    Need assistance? Reach out to us at 
+    <a href="mailto:kashafshahzadi50@gmail.com" style="color: var(--accent-color); text-decoration: none; font-weight: 600;">
+      kashafshahzadi50@gmail.com
+    </a> 
+    or call <strong>+92-275021987</strong>.
+  </p>
+</section>
+
+
+    <script type="module" src="js/home.js"></script>
+</body>
+
+</html>

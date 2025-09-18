@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Expiry Tracker</title>
+    <link rel="stylesheet" href="/css/expiriy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="logo">
+                <img src="/pictures/log.jpeg" alt="Logo">
+
+            </div>
+            <nav>
+                
+                <a href="/admininventory" class="nav-item  "><i class="fas fa-box"></i> Inventory</a>
+                <a href="/expiry" class="nav-item active"><i class="fas fa-exclamation-circle text-red-500"></i>Expiry
+                </a>
+                <a href="/admin-approvals" class="nav-item "><i class="fas fa-user-check"></i> Pending Approvals</a>
+                <a href="/employes" class="nav-item "><i class="fas fa-users"></i> Employees</a>
+                <a href="/customerdashboard" class="nav-item "><i class="fas fa-users"></i> Customer Details</a>
+                
+
+            </nav>
+            <div class="logout">
+                <a href="{{ url_for('routes.logout') }}" class="nav-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </div>
+
+        
+        <div class="main-content">
+            <div class="header">
+                <h1>Product Expiry Tracker</h1>
+                <div class="filters">
+                    <select id="timeFilter">
+                        <option value="none">All Product</option>
+                        <option value="expired">Expired Products</option>
+                        <option value="week">Within Week</option>
+                        <option value="month">Within Month</option>
+                        <option value="day">Within Day</option>
+                    </select>
+                    <input type="text" id="searchProduct" placeholder="Search products...">
+                </div>
+            </div>
+            <div id="loader" class="loader" style="display: none;"></div>
+            <div class="products-grid" id="productsContainer">
+                <!-- Products will be populated by Js -->
+            </div>
+        </div>
+    </div>
+    <script src="/js/expiriy.js"></script>
+</body>
+
+</html>

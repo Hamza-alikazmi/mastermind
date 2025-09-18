@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-In Page</title>
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f7fa;
+            margin: 0;
+        }
+
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('/pictures/SignIn.png') no-repeat center center / cover;
+            position: relative;
+
+        }
+
+        .form-section {
+            width: 350px;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            /* margin-left: 50px; */
+            /* ❌ Remove this too */
+            margin-right: 60px;
+            /* ✅ Add this instead for spacing from right edge */
+        }
+
+
+        .logo img {
+            width: 120px;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 20px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        form label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px 12px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .forgot-password {
+            font-size: 12px;
+            color: #0cb8b2;
+            font-weight: bold;
+            text-decoration: none;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .sign-in-button {
+            width: 100%;
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #0cb8b2;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .sign-in-button:hover {
+            background-color: #108581;
+        }
+
+        .signup-text {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+
+        .signup-text a {
+            color: #0cb8b2;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+
+
+        @media (max-width: 768px) {
+            .form-section {
+                width: 90%;
+                margin-left: 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            form input {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .sign-in-button {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .signup-text {
+                font-size: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="form-section">
+            <img>
+            <h3>Welcome back !!!</h3>
+            <h1 id="roleTitle">Sign in</h1>
+            <p id="roleDescription" style="color: #666; margin-bottom: 20px; font-size: 14px;"></p>
+            <form id="login-form">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter Your Email" required />
+                <span id="email-error" class="error-message" style="color: red; font-size: 12px;"></span>
+
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter Your Password" required />
+                <span id="password-error" class="error-message" style="color: red; font-size: 12px;"></span>
+
+
+                <a href="/forgot_password" class="forgot-password">Forgot Password?</a>
+
+                <button type="submit" class="sign-in-button">Sign In</button>
+            </form>
+
+          <style>
+    /* Popup message styling */
+    #popup-message {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: #333;
+        color: white;
+        padding: 16px 30px;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        z-index: 9999;
+    }
+    #popup-message.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    #popup-message.success {
+        background-color: #28a745;
+    }
+    #popup-message.error {
+        background-color: #dc3545;
+    }
+</style>
+
+<div id="popup-message"></div>
+
+<script>
+    // Get selected role from sessionStorage
+    const selectedRole = sessionStorage.getItem('selectedRole');
+    
+    // Update UI based on selected role
+    if (selectedRole) {
+        const roleTitle = document.getElementById('roleTitle');
+        const roleDescription = document.getElementById('roleDescription');
+        
+        switch(selectedRole) {
+            case 'owner':
+                roleTitle.textContent = 'Owner Login';
+                roleDescription.textContent = 'Access full system control and business insights';
+                break;
+            case 'admin':
+                roleTitle.textContent = 'Admin Login';
+                roleDescription.textContent = 'Manage inventory, users, and operations';
+                break;
+            case 'employee':
+                roleTitle.textContent = 'Employee Login';
+                roleDescription.textContent = 'Access POS system and inventory management';
+                break;
+            case 'customer':
+                roleTitle.textContent = 'Customer Login';
+                roleDescription.textContent = 'Shop online and manage your orders';
+                break;
+        }
+    }
+
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const popup = document.getElementById("popup-message");
+
+    // Function to show popup message
+    function showPopup(message, type) {
+        popup.textContent = message;
+        popup.className = `show ${type}`;
+        setTimeout(() => {
+            popup.classList.remove("show");
+        }, 3000);
+    }
+
+    // Error message elements
+    const emailError = document.createElement("div");
+    emailError.style.color = "red";
+    emailError.style.fontSize = "12px";
+    emailInput.insertAdjacentElement("afterend", emailError);
+
+    const passwordError = document.createElement("div");
+    passwordError.style.color = "red";
+    passwordError.style.fontSize = "12px";
+    passwordInput.insertAdjacentElement("afterend", passwordError);
+
+    // Live validation for email
+    emailInput.addEventListener("input", () => {
+        const emailValue = emailInput.value.trim();
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailValue) {
+            emailError.textContent = "Email is required.";
+        } else if (!emailRegex.test(emailValue)) {
+            emailError.textContent = "Invalid email format.";
+        } else {
+            emailError.textContent = "";
+        }
+    });
+
+    // Live validation for password
+    passwordInput.addEventListener("input", () => {
+        const passwordValue = passwordInput.value.trim();
+        if (!passwordValue) {
+            passwordError.textContent = "Password is required.";
+        } else if (passwordValue.length < 8) {
+            passwordError.textContent = "Password must be at least 8 characters.";
+        } else {
+            passwordError.textContent = "";
+        }
+    });
+
+    // Your original fetch code untouched, only replaced alert()
+    document.getElementById("login-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let email = emailInput.value.trim();
+        let password = passwordInput.value.trim();
+
+        if (emailError.textContent || passwordError.textContent) {
+            return;
+        }
+
+        fetch("./signsin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({ email, password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showPopup("Login successful !", "success");
+                    setTimeout(() => {
+                        // Clear the selected role from sessionStorage
+                        // sessionStorage.removeItem('selectedRole');
+                        const role = data.role;
+                        if (role === "admin") {
+                            window.location.href = "/admininventory?role=admin";
+                        } else if (role === "employee") {
+                            window.location.href = "/pos";
+                        } else if (role === "owner") {
+                            window.location.href = "/dashboard";
+                        } else if (role === "customer") {
+                            window.location.href = "/customer";
+                        } else {
+                            showPopup("Unknown role", "error");
+                        }
+                    }, 3000);
+                } else {
+                    showPopup(data.message, "error");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                showPopup("Login failed. Try again later.", error);
+            });
+    });
+</script>
+
+
+
+            <div id="signupSection" class="signup-text">
+                I don't have an account? <a href="#" onclick="goToSignup()">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // Hide signup option for owner role
+    const selectedRoleSignup = sessionStorage.getItem('selectedRole');
+    if (selectedRoleSignup === 'owner') {
+        document.getElementById('signupSection').style.display = 'none';
+    }
+
+function goToSignup() {
+    const selectedRoleSignup = sessionStorage.getItem('selectedRole');
+    if (selectedRoleSignup) {
+        sessionStorage.setItem('signupRole', selectedRoleSignup);
+    }
+    window.location.href = '/signup';
+}
+</script>
+</body>
+
+</html>

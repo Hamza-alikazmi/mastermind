@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard</title>
+    <link rel="stylesheet" href="/css/ownerdashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/pictures/log.jpeg" alt="Logo">
+        </div>
+        
+        <nav>
+            <a href="/dashboard" class="nav-item"><i class="fas fa-chart-line"></i> Business Intelligence</a>
+            <a href="/BIexpiry" class="nav-item"><i class="fas fa-exclamation-triangle"></i> Stock Expiry</a>
+            <a href="/restocking" class="nav-item"><i class="fas fa-truck"></i> Restocking Prediction</a>
+            <a href="/customer-pattern" class="nav-item"><i class="fas fa-users"></i> Customer Purchase Pattern</a>
+            <a href="/seasonal-demand" class="nav-item active"><i class="fas fa-calendar-alt"></i> Seasonal Demand Forecasting</a>
+            <a href="/smart-recommendation" class="nav-item"><i class="fas fa-lightbulb"></i> Smart Recommendation</a>
+             <a href="/adminusers" class="nav-item"><i class="fas fa-user-cog"></i> User Management</a>
+            <a href="/owner-approvals" class="nav-item"><i class="fas fa-user-check"></i> Pending Approvals</a>
+            
+        </nav>
+        
+        <div class="logout">
+            <a href="{{ url_for('routes.logout') }}" class="nav-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+
+    <main>
+        <h1 style="text-align: center; margin-bottom: 20px;">Seasonal Forecast</h1>
+        <div style="text-align:center; margin: 10px 0 20px;">
+            <button onclick="generateSeasonalReport()" style="background:#138BA8;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;">
+                <i class="fas fa-file-pdf"></i> Generate Report
+            </button>
+        </div>
+       <iframe title="seasonal demand forecasting" width="1015" height="1200" src="https://app.fabric.microsoft.com/view?r=eyJrIjoiM2IwZWRjMGQtOWQxNi00MjgyLThjMWYtYTQ5ZjRlZmNmY2FhIiwidCI6IjE3OTZiZTkwLWJhNTktNDJjOC05ZmQ0LWM4MTFlMjI5MTdmMyIsImMiOjl9" frameborder="0" allowFullScreen="true">
+
+       </iframe>
+
+    </main>
+    <script>
+        async function generateSeasonalReport(){
+            try{
+                const res = await fetch('/dss/report/seasonal');
+                const data = await res.json();
+                if(data.pdf_url){ window.location.href = data.pdf_url; }
+                else{ alert(data.error || 'Failed to generate report'); }
+            }catch(e){ alert('Error generating report'); }
+        }
+    </script>
+</body>
+
+</html>

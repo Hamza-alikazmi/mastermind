@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <link rel="stylesheet" href="/css/employee.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/pictures/log.jpeg" alt="Logo">
+        </div>
+        <nav>
+                
+                <a href="/admininventory" class="nav-item  "><i class="fas fa-box"></i> Inventory</a>
+
+                <a href="/expiry" class="nav-item "><i class="fas fa-exclamation-circle text-red-500"></i>Expiry
+                </a>
+                <a href="/employes" class="nav-item active "><i class="fas fa-users"></i> Employees</a>
+                <a href="/customerdashboard" class="nav-item "><i class="fas fa-users"></i> Customer Details</a>
+                
+
+
+
+            </nav>
+        <div class="logout">
+            <a href="{{ url_for('routes.logout') }}" class="nav-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search employees..." id="searchEmployees">
+            </div>
+            <div class="header-right">
+                <i class="fas fa-question-circle"></i>
+                <i class="fas fa-bell"></i>
+                <div class="user">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+            </div>
+        </header>
+
+        <div class="content">
+            <div class="content-header">
+                <div>
+                    <h1>Employee Management</h1>
+                    <p class="subtitle">Manage your team members and their information</p>
+                </div>
+                <button class="add-employee-btn" onclick="openModal()">
+                    <i class="fas fa-plus"></i>
+                    Add Employee
+                </button>
+            </div>
+
+            <!-- Employee Statistics Cards -->
+            <div class="employee-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalEmployees">0</h3>
+                        <p>Total Employees</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalSalary">Rs. 0</h3>
+                        <p>Total Monthly Salary</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="employee-table">
+                <div class="table-header">
+                    <h3>Employee List</h3>
+                    <div class="table-filters">
+                        <select id="sortBy">
+                            <option value="name">Sort by Name</option>
+                            <option value="salary">Sort by Salary</option>
+                        </select>
+                    </div>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Avatar</th>
+                            <th>Employee ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>CNIC</th>
+                            <th>Emergency Contact</th>
+                            <th>Salary</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTableBody">
+                        <!-- Employee data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding/editing employees -->
+    <div id="employeeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Add Employee</h2>
+            <form id="employeeForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="empId">Employee ID</label>
+                        <input type="text" id="empId" required placeholder="Enter employee ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" required placeholder="Enter full name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" required placeholder="Enter email address">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" required placeholder="Enter phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="cnic">CNIC Number</label>
+                        <input type="text" id="cnic" required placeholder="Enter CNIC number">
+                    </div>
+                    <div class="form-group">
+                        <label for="emergency">Emergency Contact</label>
+                        <input type="tel" id="emergency" required placeholder="Enter emergency contact">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Monthly Salary (Rs.)</label>
+                        <input type="number" id="salary" required placeholder="Enter salary amount" min="0">
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn-save">Save Employee</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content delete-modal">
+            <div class="delete-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Delete Employee</h3>
+            <p>Are you sure you want to delete this employee? This action cannot be undone.</p>
+            <div class="delete-actions">
+                <button type="button" class="btn-cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn-delete" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/employee.js"></script>
+</body>
+</html>

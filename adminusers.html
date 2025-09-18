@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management - Owner Panel</title>
+    <link rel="stylesheet" href="/css/employee.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/pictures/log.jpeg" alt="Logo">
+        </div>
+        <nav>
+        <a href="/dashboard" class="nav-item"><i class="fas fa-chart-line"></i> Business Intelligence</a>
+            <a href="/BIexpiry" class="nav-item"><i class="fas fa-exclamation-triangle"></i> Stock Expiry</a>
+            <a href="/restocking" class="nav-item"><i class="fas fa-truck"></i> Restocking Prediction</a>
+            <a href="/customer-pattern" class="nav-item"><i class="fas fa-users"></i> Customer Purchase Pattern</a>
+            <a href="/seasonal-demand" class="nav-item"><i class="fas fa-calendar-alt"></i> Seasonal Demand Forecasting</a>
+            <a href="/smart-recommendation" class="nav-item"><i class="fas fa-lightbulb"></i> Smart Recommendation</a>
+             <a href="/adminusers" class="nav-item active"><i class="fas fa-user-cog"></i> User Management</a>
+            <a href="/owner-approvals" class="nav-item"><i class="fas fa-user-check"></i> Pending Approvals</a>    
+        </nav>
+        <div class="logout">
+            <a href="{{ url_for('routes.logout') }}" class="nav-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+
+        <div class="content">
+            <div class="content-header">
+                <div>
+                    <h1>User Management</h1>
+                    <p class="subtitle">Manage system users and their roles</p>
+                </div>
+                
+            </div>
+
+            <!-- User Statistics Cards -->
+            <div class="employee-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalUsers">0</h3>
+                        <p>Total Users</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalOwners">0</h3>
+                        <p>Owners</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalAdmins">0</h3>
+                        <p>Admins</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalCustomers">0</h3>
+                        <p>Customers</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="employee-table">
+                <div class="table-header">
+                    <h3>User List</h3>
+                    
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Avatar</th>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- User data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    
+            </form>
+        </div>
+    </div>
+
+   
+
+    <script src="/js/adminusers.js"></script>
+</body>
+
+</html>

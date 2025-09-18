@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaMastermind</title>
+    <link rel="stylesheet" href="inventory.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="/pictures/img.jpg" alt="PharmaMastermind Logo" class="logo-img">
+
+        </div>
+        <div class="nav-links">
+            <a href="/pos"><button>POS</button></a>
+            <a href="/inventory"> <button class="active">Inventory</button></a>
+            <a href="/invoice"> <button>Invoices</button></a>
+            <a href="/returns"><button>Returns</button></a>
+            <a href=" /logout "> <button><i class="fas fa-sign-out-alt"></i> Logout </button></a>
+        </div>
+    </nav>
+
+    <main>
+        <h2>Product Inventory</h2>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search by code or name">
+                <span class="search-icon">🔍</span>
+            </div>
+
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="cosmetics">Cosmetics</option>
+                <option value="medicine">Medicine</option>
+                <option value="babycare">Babycare</option>
+            </select>
+
+            <button class="add-product-btn" onclick="openAddProductModal()">+ Add Product</button>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>IMAGE</th>
+                        <th>NAME</th>
+                        <th>PRODUCT ID</th>
+                        <th>QUANTITY</th>
+                        <th>EXPIRY DATE</th>
+                        <th>COST PRICE</th>
+                        <th>SELLING PRICE</th>
+                        <th>ACTIONS</th>
+
+                    </tr>
+                </thead>
+                <tbody id="productTableBody">
+                   
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+  
+    <div id="addProductModal" class="modal">
+        <div class="modal-content">
+            <h2>Add Product</h2>
+            <form id="addProductForm">
+                <div class="image-upload">
+                    <div class="upload-area" id="uploadArea">
+                        <p>Drag and Drop Image to Upload</p>
+                        <p>OR</p>
+                        <button type="button" class="browse-btn">Browse</button>
+                        <input type="file" id="imageInput" hidden accept="image/*">
+                    </div>
+                    <img id="previewImage" class="preview-image" hidden>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="productName">Product Name</label>
+                        <input type="text" id="productName" required>
+                    </div>
+
+                    <div class="form-group">
+    <label for="productId">Product ID</label>
+    <input type="text" id="productId" name="productId" readonly>
+</div>
+
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" required>
+                            <option value="cosmetics">Cosmetics</option>
+                            <option value="medicine">Medicine</option>
+                            <option value="babycare">Babycare</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expiryDate">Expiry Date</label>
+                        <input type="date" id="expiryDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity in Stock</label>
+                        <input type="number" id="quantity" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lowStockWarning">Low Stock Warning</label>
+                        <input type="number" id="lowStockWarning" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="costPrice">Cost Price</label>
+                        <input type="number" id="costPrice" required min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sellingPrice">Selling Price</label>
+                        <input type="number" id="sellingPrice" required min="0">
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="cancel-btn" onclick="closeAddProductModal()">Cancel</button>
+                    <button type="submit" class="save-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <script src="inventory.js"></script>
+</body>
+
+</html>

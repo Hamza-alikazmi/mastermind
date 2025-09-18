@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory System</title>
+    <link rel="stylesheet" href="/css/admininventroy.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="shortcut icon" href="/pictures/icon.png" type="image/x-icon">
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/pictures/log.jpeg" alt="Logo">
+
+        </div>
+        <nav>
+           
+            <a href="/admininventory" class="nav-item active "><i class="fas fa-box"></i> Inventory</a>
+
+            <a href="/expiry" class="nav-item"><i class="fas fa-exclamation-circle text-red-500"></i>Expiry
+            </a>
+            
+            <a href="/admin-approvals" class="nav-item "><i class="fas fa-user-check"></i> Pending Approvals</a>
+            <a href="/employes" class="nav-item "><i class="fas fa-users"></i> Employees</a>
+            <a href="/customerdashboard" class="nav-item "><i class="fas fa-users"></i> Customer Details</a>
+            
+
+
+        </nav>
+        <div class="logout">
+            <a href="{{ url_for('routes.logout') }}" class="nav-item"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="user-info">
+                <i class="fas fa-question-circle"></i>
+                <i class="fas fa-bell"></i>
+                <div class="user">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Admin</span>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <h1>Inventory</h1>
+            <p class="subtitle">Following is the list of inventory</p>
+            <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                <a href="/order"><button class="btn">Add Order</button></a>
+                
+            </div>
+            <div class="inventory-grid" id="inventoryGrid">
+                <!-- Products will be added here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Details Modal -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-body">
+                <!-- Product details will be added here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/admininventory.js"></script>
+</body>
+
+</html>
