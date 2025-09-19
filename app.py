@@ -1003,7 +1003,7 @@ def add_product():
 
 @app.route('/api/products/<int:product_id>', methods=['PUT'])
 @csrf.exempt
-@require_role('owner', 'admin')
+@require_role('owner', 'admin', 'employee')
 def update_product(product_id):
     try:
         data = request.form
