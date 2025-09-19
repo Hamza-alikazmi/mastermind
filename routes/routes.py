@@ -124,6 +124,7 @@ def logout():
     return redirect('/')  
 
 
+
 @routes.route('/payment')
 def payment():
     if session.get("role") not in [ "admin", "customer","owner"]:

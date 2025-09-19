@@ -15,7 +15,7 @@ function fetchProducts() {
             updateProductCount();
         })
         .catch(err => {
-            console.error("Error loading products:", err);
+            alert(`Error loading products:", ${err}`);
             showNotification("Error loading products. Please refresh the page.", "error");
         });
 }

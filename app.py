@@ -462,6 +462,7 @@ def admin_get_pending_approvals():
 
 @app.route('/api/admin/handle-approval', methods=['POST'])
 @require_role('admin')
+@csrf.exempt
 def admin_handle_approval():
     try:
         data = request.get_json() or {}
@@ -928,7 +929,8 @@ def get_customer_ledger(customer_id):
 #         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/products', methods=['GET'])
-@require_role('owner', 'admin', 'employee')
+@csrf.exempt
+@require_role('owner', 'admin', 'employee','customer')
 def get_products():
     try:
         with get_db_connection() as conn:
@@ -948,6 +950,7 @@ def get_products():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/products', methods=['POST'])
+@csrf.exempt
 @require_role('owner', 'admin')
 def add_product():
     try:
@@ -999,6 +1002,7 @@ def add_product():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/products/<int:product_id>', methods=['PUT'])
+@csrf.exempt
 @require_role('owner', 'admin')
 def update_product(product_id):
     try:
@@ -1047,6 +1051,7 @@ def update_product(product_id):
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/products/<int:product_id>', methods=['DELETE'])
+@csrf.exempt
 @require_role('owner', 'admin')
 def delete_product(product_id):
     try:
@@ -1065,6 +1070,7 @@ def delete_product(product_id):
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/customers', methods=['GET'])
+@csrf.exempt
 @require_role('owner', 'admin')
 def get_customers():
     try:
@@ -1137,6 +1143,7 @@ def get_customer_order_details(customer_id):
         return jsonify({"error": str(e)}), 500
 
 @app.route('/save_pharmacy_order', methods=['POST'])
+@csrf.exempt
 @require_role('owner', 'admin')
 def save_pharmacy_order():
     try:
@@ -1247,6 +1254,7 @@ def generate_pharmacy_order_pdf(order_id, supplier_name, expected_delivery_date,
     return path
 
 @app.route('/api/create_payment_intent', methods=['POST'])
+@csrf.exempt
 def create_payment_intent():
     try:
         data = request.get_json()
@@ -1288,6 +1296,7 @@ def create_payment_intent():
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/expired_products', methods=['GET'])
+@csrf.exempt
 @require_role('owner', 'admin')
 def get_expired_products():
     try:
@@ -1312,6 +1321,7 @@ def get_expired_products():
         return jsonify({"error": str(e)}), 500
 
 @app.route('/api/save_customer_order', methods=['POST'])
+@csrf.exempt
 @require_role('customer')
 def save_customer_order():
     try:
@@ -1385,7 +1395,8 @@ def save_customer_order():
                 paid_amount=paid_amount,
                 change_amount=change_amount,
                 card_holder=card_holder,
-                card_last_four=card_last_four
+                card_last_four=card_last_four,
+                payment_method=payment_method
             )
 
             logger.info(f"Customer order {order_id} saved for user {session.get('user_id')}", extra={'request_id': g.request_id})
@@ -1399,7 +1410,7 @@ def save_customer_order():
         logger.error(f"Save customer order error: {str(e)}", extra={'request_id': g.request_id})
         return jsonify({"error": str(e)}), 500
 
-def generate_customer_receipt_pdf(order_id, cart, total_amount, paid_amount, change_amount, card_holder, card_last_four):
+def generate_customer_receipt_pdf(order_id, cart, total_amount, paid_amount, change_amount, card_holder, card_last_four, payment_method):
     pdf = FPDF()
     pdf.add_page()
     pdf.set_auto_page_break(auto=True, margin=15)
@@ -1464,6 +1475,8 @@ def generate_customer_receipt_pdf(order_id, cart, total_amount, paid_amount, cha
     pdf.set_x(135)
     pdf.set_font("Arial", "", 9)
     pdf.cell(50, 6, f"Paid: Rs. {paid_amount:.2f}", ln=True)
+    pdf.set_x(135)
+    pdf.cell(50, 6, f"Change: Rs. {change_amount:.2f}", ln=True)
 
     pdf.ln(8)
     pdf.set_font("Arial", "", 9)
@@ -1484,7 +1497,9 @@ def generate_customer_receipt_pdf(order_id, cart, total_amount, paid_amount, cha
 
     return path
 
+
 @app.route('/download_customer_receipt/<filename>')
+@csrf.exempt
 def download_customer_receipt(filename):
     try:
         filename = secure_filename(filename)
@@ -1494,6 +1509,7 @@ def download_customer_receipt(filename):
         return jsonify({"error": str(e)}), 404
 
 @app.route('/api/save_order', methods=['POST'])
+@csrf.exempt
 @require_role('owner', 'admin', 'employee')
 def save_order():
     try:
@@ -1563,6 +1579,137 @@ def save_order():
     except Exception as e:
         logger.error(f"Save order error: {str(e)}", extra={'request_id': g.request_id})
         return jsonify({"error": str(e)}), 500
+import os
+
+@app.route('/api/employees', methods=['GET'])
+def get_employees():
+    try:
+        with get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute('SELECT * FROM employees')
+                rows = cur.fetchall()
+
+                employees = []
+                for row in rows:
+                    employee = {
+                        'employee_id': row.get('employee_id'),  
+                        'name': row.get('name'),
+                        'email': row.get('email'),
+                        'phone': row.get('phone'),
+                        'cnic': row.get('cnic'),
+                        'emergency': row.get('emergency'),  
+                        'salary': row.get('salary')
+                    }
+                    employees.append(employee)
+
+                return jsonify(employees)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/employees/<string:emp_id>', methods=['PUT'])
+def update_employee(emp_id):
+    try:
+     data = request.json
+     with get_db_connection() as conn:
+      with conn.cursor() as cur:
+        query = '''
+            UPDATE employees
+            SET name=%s, email=%s, phone=%s, cnic=%s,
+                emergency=%s, role=%s, salary=%s
+            WHERE employee_id=%s
+        '''
+        values = (
+            data['name'], data['email'], data['phone'], data['cnic'],
+            data['emergency_contact'], data['role'], data['salary'], emp_id
+        )
+        cur.execute(query, values)
+        conn.commit()
+        cur.close()
+        return jsonify({'message': 'Employee updated successfully'})
+    except Exception as e:
+        print("Update error:", e)
+        return jsonify({'error': str(e)}), 500
+
+
+
+
+@app.route('/api/employees/<string:emp_id>', methods=['DELETE'])
+def delete_employee(emp_id):
+    try:
+     with get_db_connection() as conn:
+      with conn.cursor() as cur:
+        cur.execute("DELETE FROM employees WHERE employee_id = %s", (emp_id,))
+        conn.commit()
+        cur.close()
+        return jsonify({'message': 'Employee deleted successfully'})
+    except Exception as e:
+        print("Delete error:", e)
+        return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/invoice/<order_id>')
+def get_invoice(order_id):
+   with get_db_connection() as conn:
+      with conn.cursor() as cursor:
+    
+        cursor.execute("SELECT * FROM orders WHERE order_id = %s", (order_id,))
+        order = cursor.fetchone()
+
+        if not order:
+            return jsonify({"error": "Order not found"}), 404
+
+        
+        cursor.execute("SELECT * FROM order_items WHERE order_id = %s", (order_id,))
+        items = cursor.fetchall()
+
+        return jsonify({
+            "order": order,
+            "items": items
+        }), 200
+
+
+
+@app.route('/api/process_return', methods=['POST'])
+@csrf.exempt
+def process_return():
+    try:
+     data = request.get_json()
+     with get_db_connection() as conn:
+      with conn.cursor() as cur:
+        
+        cur.execute("""
+            INSERT INTO returns (invoice_number, product_name, original_quantity, 
+                               return_quantity, unit_price, return_amount, return_reason, 
+                               return_notes, return_date, processed_by)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NOW(), %s)
+        """, (
+            data['invoice_number'],
+            data['product_name'],
+            data['original_quantity'],
+            data['return_quantity'],
+            data['unit_price'],
+            data['return_amount'],
+            data['return_reason'],
+            data['return_notes'],
+            session.get('user_id', 'system')
+        ))
+        
+        cur.execute("""
+            UPDATE products 
+            SET stock_quantity = stock_quantity + %s 
+            WHERE product_name = %s
+        """, (data['return_quantity'], data['product_name']))
+        
+        conn.commit()
+        
+        return jsonify({"success": True, "message": "Return processed successfully"})
+        
+    except Exception as e:
+        conn.rollback()
+        return jsonify({"success": False, "message": str(e)}), 500
+
+
 
 if __name__ == '__main__':
     app.run(debug=os.getenv('FLASK_ENV') != 'production')

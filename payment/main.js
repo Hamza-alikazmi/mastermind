@@ -1,10 +1,6 @@
-// Initialize Stripe with your publishable key
 const stripe = Stripe('pk_test_51RvFpAFnsPUQVISnl0hS74vk609jQ9mbxHvDmCGRfYj1rx9bD2L4EnJhyLat2jHrHPuxwbtc2C5SSrzPGVYYve5300AV5Kyw7O');
-
 let orderData = null;
 let card = null;
-
-// Load order data from sessionStorage
 document.addEventListener('DOMContentLoaded', () => {
     loadOrderData();
     initializePaymentForm();

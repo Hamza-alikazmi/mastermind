@@ -47,8 +47,10 @@
     </main>
     <script>
         async function generateSeasonalReport(){
+            var get = document.createElement()
             try{
                 const res = await fetch('/dss/report/seasonal');
+                document.write("<h1>fetching</h1>");
                 const data = await res.json();
                 if(data.pdf_url){ window.location.href = data.pdf_url; }
                 else{ alert(data.error || 'Failed to generate report'); }
