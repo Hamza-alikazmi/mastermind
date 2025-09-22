@@ -278,7 +278,7 @@ def signsin():
                 session['role'] = user['role']
                 session['user_id'] = user['id']
 
-                print("✅ SESSION SET:", session)
+                print(" SESSION SET:", session)
 
                 return jsonify({
                     "success": True,
@@ -416,6 +416,7 @@ def get_pending_approvals():
 
 @app.route('/api/handle-approval', methods=['POST'])
 @require_role('owner')
+@csrf.exempt
 def handle_approval():
     try:
         data = request.get_json() or {}
